@@ -24,3 +24,8 @@ handlers:
 
 - url: /.*
   script: analysis.analysis.app
+
+
+libraries:
+- name: numpy
+  version: "1.6.1"

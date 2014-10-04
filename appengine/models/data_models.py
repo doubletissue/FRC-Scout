@@ -7,7 +7,7 @@ import sys
 # A class to store a mapping from a score type to the score. Score types might be:
 # Autonomous, Hybrid, Teleoperated, Endgame, Foul, Total Score, etc.
 class ScoreEntry(ndb.Model):
-    score_type = ndb.StringProperty(indexed=False)
+    score_type = ndb.StringProperty(indexed=False,choices=['hyb_pts','tel_pts','scr_pts','tot_pts','f_gain_pts','f_gave_pts'])
     score = ndb.IntegerProperty(indexed=False)
 
 
@@ -21,13 +21,14 @@ class DataEntry(ndb.Model):
     
     # Identifying features
     # TODO do we need to index everything? Can we just use match number perhaps?
-    year = ndb.DateTimeProperty(indexed=True)
+    year = ndb.IntegerProperty(indexed=True)
     event = ndb.StringProperty(indexed=True)
-    match_number = ndb.IntegerProperty(indexed=True)
-    match_time = ndb.DateTimeProperty(indexed=False)
+    match_number = ndb.IntegerProperty(indexed=False)
+    match_time = ndb.DateTimeProperty(indexed=True)
     alliance = ndb.IntegerProperty(indexed=True)
     team_number = ndb.IntegerProperty(indexed=True)
-    teamsPlayed = ndb.IntegerProperty(indexed=False,repeated=True)
+    teamsPlayed = ndb.IntegerProperty(indexed=True,repeated=True)
 
     # Data
-    scores = ndb.StructuredProperty(ScoreEntry, repeated=True)
+    scores = ndb.JsonProperty()
+    # scores = ndb.StructuredProperty(ScoreEntry, repeated=True)
